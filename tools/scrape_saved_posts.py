@@ -73,7 +73,7 @@ class LinkedInSavedPostsScraper:
 
 if __name__ == "__main__":
     LINKEDIN_EMAIL = "N200040@rguktn.ac.in"
-    LINKEDIN_PASSWORD = "HAKUNAmatata1@"
+    LINKEDIN_PASSWORD = " "
 
     scraper = LinkedInSavedPostsScraper(LINKEDIN_EMAIL, LINKEDIN_PASSWORD)
     scraper.run()

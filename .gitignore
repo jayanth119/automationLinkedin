@@ -3,3 +3,6 @@ env
 .DS_Store
 linkedin_state.json
 tools/linkedin_state.json
+__pycache__
+tools/__pycache__
+linkedin_state.json

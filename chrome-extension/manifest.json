@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Post Summarizer",
+  "version": "1.0.0",
+  "description": "Summarize LinkedIn posts with AI - Extract text, images, videos, and documents instantly",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "webRequest",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "http://localhost:8000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LinkedIn Post Summarizer",
+    "default_icons": {
+      "16": "icons/icon48.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content.js"],
+      "css": ["inject.css"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon48.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon48.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.css"],
+      "matches": ["https://www.linkedin.com/*"]
+    }
+  ]
+}

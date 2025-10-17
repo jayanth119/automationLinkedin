@@ -10,8 +10,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from prompts.videoprompt import video_prompt 
 
-genai.configure(api_key=" ")
-model = genai.GenerativeModel("gemini-1.5-flash")
+genai.configure(api_key="AIzaSyD-OBmR-91OZt9VadJQb8X5GdisKjchOTU")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 class VideoAnalysis:

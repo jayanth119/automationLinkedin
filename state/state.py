@@ -1,9 +1,6 @@
 from typing import List, TypedDict
 
 
-# =====================
-# STATE DEFINITION
-# =====================
 class ExtractState(TypedDict):
     url: str
     text: str
@@ -11,6 +8,11 @@ class ExtractState(TypedDict):
     documents: List[str]
     videos: List[str]
     notes: str
+    email: str
+    password: str
+    saved_posts: List[dict]          
+    classified_posts: dict           
+
 
 
 

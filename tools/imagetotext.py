@@ -9,8 +9,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from prompts.imageprompt import image_prompt
 
-genai.configure(api_key=" ")
-model = genai.GenerativeModel("gemini-1.5-flash")
+genai.configure(api_key="AIzaSyD-OBmR-91OZt9VadJQb8X5GdisKjchOTU")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 class ImageAnalysis:
     def __init__(self):

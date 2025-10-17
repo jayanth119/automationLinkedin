@@ -1,10 +1,10 @@
 import os
-import json
 from playwright.sync_api import sync_playwright
 
 STORAGE_FILE = "linkedin_state.json"
 EMAIL = "n200040@rguktn.ac.in"
-PASSWORD = "HAKUNAmatata1@"
+PASSWORD = " "
+
 
 def login_and_save_state():
     with sync_playwright() as p:
@@ -13,18 +13,26 @@ def login_and_save_state():
         page = context.new_page()
         page.goto("https://www.linkedin.com/login")
 
+        # Fill login form
         page.fill("input#username", EMAIL)
         page.fill("input#password", PASSWORD)
         page.click("button[type='submit']")
-        page.wait_for_load_state("networkidle")
-        # wait 60 seconds
-        page.wait_for_timeout(60000)
-        
 
-        print("✅ Logged in successfully")
+        try:
+            # ✅ Wait for a known element that means login succeeded
+            page.goto("https://www.linkedin.com/feed/")
+            print("✅ Logged in successfully")
+        except Exception:
+            # ⚠️ Fallback: LinkedIn may ask for OTP / Captcha
+            print("⚠️ Could not auto-detect login success. If OTP/Captcha is required, solve it manually.")
+            input("👉 After finishing login in the browser, press Enter here...")
+
+        # Save session state
         context.storage_state(path=STORAGE_FILE)
         print(f"💾 Session saved to {STORAGE_FILE}")
+
         browser.close()
+
 
 def use_saved_session():
     with sync_playwright() as p:
@@ -35,6 +43,7 @@ def use_saved_session():
         print("✅ Opened LinkedIn with saved session")
         input("Press Enter to close...")
         browser.close()
+
 
 if __name__ == "__main__":
     if not os.path.exists(STORAGE_FILE) or os.path.getsize(STORAGE_FILE) == 0:

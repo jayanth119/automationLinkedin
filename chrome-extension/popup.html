@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #764ba2;
+    }
+
+    body {
+      width: 420px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background: white;
+      color: #333;
+    }
+
+    .container {
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 22px;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .header-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: -0.5px;
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .status-badge.logged-in {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-badge.logged-out {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 11px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      background: #fafbff;
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #333;
+    }
+
+    #message-container {
+      min-height: 0;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      animation: slideIn 0.3s ease;
+      border-left: 4px solid;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border-left-color: #28a745;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border-left-color: #dc3545;
+    }
+
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border-left-color: #17a2b8;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-section {
+      animation: fadeIn 0.3s ease;
+    }
+
+    .logged-in-section {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .summarize-section {
+      display: none;
+    }
+
+    .summarize-section.active {
+      display: block;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .user-info {
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f0f0 100%);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      border-left: 4px solid #667eea;
+    }
+
+    .user-info strong {
+      color: #333;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .user-info span {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .download-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 11px;
+    }
+
+    .stat-item {
+      flex: 1;
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .stat-label {
+      color: #666;
+      display: block;
+    }
+
+    .stat-value {
+      color: #667eea;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #ddd, transparent);
+      margin: 16px 0;
+    }
+
+    .help-text {
+      font-size: 11px;
+      color: #999;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">✨</div>
+      <div class="header-text">
+        <h1>LinkedIn Summarizer</h1>
+        <p>Powered by AI</p>
+      </div>
+    </div>
+
+    <div id="message-container"></div>
+
+    <!-- Login Section -->
+    <div id="login-section" class="login-section">
+      <form>
+        <div class="form-group">
+          <label for="email">📧 Email Address</label>
+          <input type="email" id="email" placeholder="your.email@linkedin.com" autocomplete="email">
+          <div class="help-text">Your LinkedIn account email</div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">🔐 Password</label>
+          <input type="password" id="password" placeholder="Your password" autocomplete="current-password">
+          <div class="help-text">Your LinkedIn password</div>
+        </div>
+
+        <button type="button" class="btn-primary" id="login-btn" style="width: 100%;">
+          🔓 Login
+        </button>
+      </form>
+
+      <div class="divider"></div>
+
+      <div style="background: #f0f8ff; padding: 12px; border-radius: 8px; border-left: 4px solid #667eea; font-size: 12px; color: #0c5460; line-height: 1.5;">
+        <strong>💡 Tip:</strong> Your credentials are used only to extract post data and are never stored permanently.
+      </div>
+    </div>
+
+    <!-- Logged In Section -->
+    <div id="logged-in-section" class="logged-in-section" style="display: none;">
+      <div class="user-info">
+        <strong>👤 Logged in as</strong>
+        <span id="user-email"></span>
+      </div>
+
+      <div class="status-badge logged-in">✓ Connected to Backend</div>
+
+      <div class="section summarize-section active">
+        <h3>📝 Summarize Post</h3>
+        
+        <div class="form-group">
+          <label for="post-url">LinkedIn Post URL</label>
+          <input type="text" id="post-url" placeholder="https://www.linkedin.com/feed/update/...">
+          <div class="help-text">Paste the full URL of the LinkedIn post</div>
+        </div>
+
+        <div class="form-group">
+          <label for="format">📄 Export Format</label>
+          <select id="format">
+            <option value="pdf">📕 PDF Document</option>
+            <option value="excel">📊 Excel Spreadsheet</option>
+          </select>
+        </div>
+
+        <button class="btn-primary" id="summarize-btn" style="width: 100%; font-size: 14px;">
+          <span id="summarize-text">⚡ Summarize Post</span>
+        </button>
+
+        <div id="download-section" style="display: none; margin-top: 14px;">
+          <div class="message success" style="border-left-color: #28a745;">
+            ✅ Summary generated successfully!
+          </div>
+          <a id="download-link" class="download-link">
+            ⬇️ Download File
+          </a>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Status</span>
+          <span class="stat-value">🟢 Active</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Posts</span>
+          <span class="stat-value" id="posts-count">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Format</span>
+          <span class="stat-value" id="format-display">PDF</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>⚙️ Session</h3>
+        <button class="btn-danger" id="logout-btn" style="width: 100%;">
+          🚪 Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
