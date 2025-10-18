@@ -1,6 +1,6 @@
 // Background Service Worker
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'http://13.233.129.57/';
 
 // Listen for messages from content script or popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
