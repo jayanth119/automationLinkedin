@@ -1,6 +1,6 @@
 // Content Script - Runs on LinkedIn pages
 
-const API_BASE = 'http://13.233.129.57/';
+const API_BASE = 'http://127.0.0.1:8000';
 const POST_ATTRIBUTE = '[data-id*="urn:li:share"]';
 
 // Listen for messages from background or popup

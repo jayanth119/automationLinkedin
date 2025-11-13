@@ -1,6 +1,6 @@
 // Popup Script
 
-const API_BASE = 'http://13.233.129.57/';
+const API_BASE = 'http://127.0.0.1:8000';
 
 // DOM Elements
 const emailInput = document.getElementById('email');
